@@ -1,38 +1,33 @@
 package memoryDAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.GregorianCalendar;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
+/**
+ * étape 1 : la connexion à la base de données
+ *
+ */
 public class Connection {
 
+	private static java.sql.Connection connect = null;
+
+	private static final String ID = "Maxou";
+	private static final String MDP = "sio";
+	private static final String NOM_SERVEUR = "localhost\\SQLEXPRESS";
+	private static final String NOM_BD = "Memory";
+
+	private static final int LARGEUR_COLONNE_TEXTE = 10;
+	private static final int LARGEUR_COLONNE_ENTIER = 6;
+	private static final int LARGEUR_COLONNE_DATE = 11;
+
 	/**
-	 * étape 1 : la connexion à la base de données
-	 * @author Alain
-	 */
-
-
-		private static Connection connect = null;
-
-		private static final String ID = "Maxou";
-		private static final String MDP = "sio";
-		private static final String NOM_SERVEUR = "localhost\\SQLEXPRESS";
-		private static final String NOM_BD = "Memory";
-
-		private static final int LARGEUR_COLONNE_TEXTE = 10;
-		private static final int LARGEUR_COLONNE_ENTIER = 6;
-		private static final int LARGEUR_COLONNE_DATE = 11;
-
-		/**
 	 * Patron de conception Singleton
 	 * @return l'instance unique de connexion
 	 */
-	public static Connection getInstance() {
+	public static java.sql.Connection getInstance() {
 		if (connect==null) {
 			// Si la connexion n'a pas encore été faite, on la fait.
 			try { 
@@ -93,18 +88,11 @@ public class Connection {
 	/**
 	 * Fermeture de la connexion au SGBD SQL ServerExpress
 	 */
-	public static void fermer()
+	public static void close() throws SQLException
 	{
-		try
-		{
-			getInstance().close();
-			System.out.println("deconnexion ok");
-		}
-		catch (SQLException e)
-		{
-			connect=null;
-			System.out.println("echec de la fermeture");
-		}
+		getInstance();
+		Connection.close();
+		System.out.println("deconnexion ok");
 	}
 
 	/**
@@ -116,37 +104,37 @@ public class Connection {
 	 * --> Notez que AvionDAO est défini comme un singleton, unique instance pour tout le programme 
 	 * @param av
 	 */
-	//		PUBLIC STATIC EXEMPLECREATEPREPAREDSTATEMENT(AVION AV) {
-	//			BOOLEAN SUCCES=TRUE;
-	//			// CONSTANTES QUI PEUVENT ÊTRE DÉCLARÉES DANS VOS CLASSES DAO
-	//			STRING TABLE = "AVION";
-	//			STRING CLE_PRIMAIRE = "NUMAV";
-	//			TRY {
-	//				
-	//				STRING REQUETEDELETE = "DELETE FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+" = ?";
-	//				STRING REQUETEUPDATE = "UPDATE "+TABLE+" SET NOMAV = ?, LOC = ?, CAPACITE = ? WHERE "+CLE_PRIMAIRE+" = ?";
-	//				STRING REQUETE = "INSERT INTO "+TABLE+" (NOMAV, LOC, CAPACITE) VALUES (?, ?, ?)";
-	//				PREPAREDSTATEMENT PST = CONNEXION.GETINSTANCE().PREPARESTATEMENT(REQUETE, STATEMENT.RETURN_GENERATED_KEYS);
-	//				// ON POSE UN STRING EN PARAMÈTRE 1 -1ER '?'- ET CE STRING EST LE NOM DE L'AVION
-	//				PST.SETSTRING(1, AV.GETNOM());
-	//				PST.SETSTRING(2, AV.GETLOC());
-	//				PST.SETINT(3, AV.GETCAPACITE());
-	//				// ON EXÉCUTE LA MISE À JOUR
-	//				PST.EXECUTEUPDATE();
+	//	PUBLIC STATIC EXEMPLECREATEPREPAREDSTATEMENT(AVION AV) {
+	//		BOOLEAN SUCCES=TRUE;
+	//		// CONSTANTES QUI PEUVENT ÊTRE DÉCLARÉES DANS VOS CLASSES DAO
+	//		STRING TABLE = "AVION";
+	//		STRING CLE_PRIMAIRE = "NUMAV";
+	//		TRY {
+	//			
+	//			STRING REQUETEDELETE = "DELETE FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+" = ?";
+	//			STRING REQUETEUPDATE = "UPDATE "+TABLE+" SET NOMAV = ?, LOC = ?, CAPACITE = ? WHERE "+CLE_PRIMAIRE+" = ?";
+	//			STRING REQUETE = "INSERT INTO "+TABLE+" (NOMAV, LOC, CAPACITE) VALUES (?, ?, ?)";
+	//			PREPAREDSTATEMENT PST = CONNEXION.GETINSTANCE().PREPARESTATEMENT(REQUETE, STATEMENT.RETURN_GENERATED_KEYS);
+	//			// ON POSE UN STRING EN PARAMÈTRE 1 -1ER '?'- ET CE STRING EST LE NOM DE L'AVION
+	//			PST.SETSTRING(1, AV.GETNOM());
+	//			PST.SETSTRING(2, AV.GETLOC());
+	//			PST.SETINT(3, AV.GETCAPACITE());
+	//			// ON EXÉCUTE LA MISE À JOUR
+	//			PST.EXECUTEUPDATE();
 	//
-	//				//RÉCUPÉRER LA CLÉ QUI A ÉTÉ GÉNÉRÉE ET LA POUSSER DANS L'OBJET INITIAL
-	//				RESULTSET RS = PST.GETGENERATEDKEYS();
-	//				IF (RS.NEXT()) {
-	//					AV.SETNUMERO(RS.GETINT(1));
-	//				}
-	//
-	//			} CATCH (SQLEXCEPTION E) {
-	//				SUCCES=FALSE;
-	//				E.PRINTSTACKTRACE();
+	//			//RÉCUPÉRER LA CLÉ QUI A ÉTÉ GÉNÉRÉE ET LA POUSSER DANS L'OBJET INITIAL
+	//			RESULTSET RS = PST.GETGENERATEDKEYS();
+	//			IF (RS.NEXT()) {
+	//				AV.SETNUMERO(RS.GETINT(1));
 	//			}
 	//
-	//			RETURN SUCCES;
+	//		} CATCH (SQLEXCEPTION E) {
+	//			SUCCES=FALSE;
+	//			E.PRINTSTACKTRACE();
 	//		}
+	//
+	//		RETURN SUCCES;
+	//	}
 
 
 	/**
@@ -154,16 +142,7 @@ public class Connection {
 	 * Attention à ne pas perdre la première ligne en testant la table vide
 	 * @param table
 	 */
-	public static void afficheSelectEtoile(String table, String clauseWhere){
-		try{
-			// TODO Faire la requête SELECT FROM WHERE
-			// l'exécuter pour obtenir un ResultSet
-			// récupérer un ResultSetMetaData les méta-données getMetaData()
-			// parcourir le resultSet
-		}
-		catch(SQLException e){
-			System.out.println("Echec de la tentative d'interrogation Select * : " + e.getMessage()) ;
-		}
+	public static void afficheSelectEtoile(String table, String clauseWhere) throws SQLException{
 	}
 
 
@@ -174,13 +153,10 @@ public class Connection {
 	 * @param table
 	 * @return
 	 */
-	public static int getMaxId(String cle, String table) {
+	public static int getMaxId(String cle, String table) throws SQLException {
 		int id= -1;
-		try {
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		return id;
 	}
+
 
 }

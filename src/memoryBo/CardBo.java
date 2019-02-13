@@ -1,9 +1,11 @@
 package memoryBo;
 
 public class CardBo {
-
-
+	
+	
+	private final int id_Card;
 	private final SymboleBo MOTIF_CACHE = SymboleBo.get(0);
+	private static int counter = 0;
 	private boolean visible = false;
 	private SymboleBo motif;
 
@@ -12,6 +14,8 @@ public class CardBo {
 	{
 		super();
 		this.motif = SymboleBo.get(motif);
+		this.id_Card = counter;
+		++counter;
 	}
 
 	public boolean isVisible() 
@@ -37,8 +41,11 @@ public class CardBo {
 	{
 		this.motif = motif;
 	}
-
-
+	
+	public int getId_Card() 
+	{
+		return id_Card;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -54,6 +61,7 @@ public class CardBo {
 		}
 		return "|" + MOTIF_CACHE +"|";
 	}
+
 }
 
 

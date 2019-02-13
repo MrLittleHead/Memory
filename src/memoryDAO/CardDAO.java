@@ -47,7 +47,7 @@ public class CardDAO extends DAO <CardBo> {
 			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_carte ="+ id) ;
 			if(res.next()){
 				car = new CardBo(res.getInt(2));
-				car.setId_carte(res.getInt(1));
+				car.setId_Card(res.getInt(1)); // creation du set avec implementation auto ?
 			}
 		} catch (SQLException e) {
 			System.out.println("Echec"+e.getMessage());
@@ -62,8 +62,8 @@ public class CardDAO extends DAO <CardBo> {
 		try {
 			String requeteUpdate = ("update "+ TABLE +" set motif = ?  where "+CLE_PRIMAIRE+" =?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, car.getMotif());
-			pst.setInt(2, car.getId_carte());
+			pst.setInt(1, car.getMotif());		// transformation de l'enum str en enum int (enum.ordinal?)
+			pst.setInt(2, car.getId_Card());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			succes =false;
@@ -78,7 +78,7 @@ public class CardDAO extends DAO <CardBo> {
 		try {
 			String requeteDelete = (" delete from "+ TABLE +" where "+CLE_PRIMAIRE+" =?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteDelete, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, car.getId_carte());			
+			pst.setInt(1, car.getId_Card());			
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			succes =false;

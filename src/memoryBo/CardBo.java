@@ -3,17 +3,17 @@ package memoryBo;
 public class CardBo {
 	
 	
-	private final int id_Card;
-	private final SymboleBo MOTIF_CACHE = SymboleBo.get(0);
+	private int id_Card;
+	private final SymboleBo SYMBOLE_CACHE = SymboleBo.get(0);
 	private static int counter = 0;
 	private boolean visible = false;
-	private SymboleBo motif;
+	private SymboleBo symbole;
 
 
 	public CardBo(int motif) 
 	{
 		super();
-		this.motif = SymboleBo.get(motif);
+		this.symbole = SymboleBo.get(motif);
 		this.id_Card = counter;
 		++counter;
 	}
@@ -27,19 +27,19 @@ public class CardBo {
 		this.visible = visible;
 	}
 
-	public SymboleBo getMOTIF_CACHE() 
+	public SymboleBo getSYMBOLE_CACHE() 
 	{
-		return MOTIF_CACHE;
+		return SYMBOLE_CACHE;
 	}
 
-	public SymboleBo getMotif() 
+	public SymboleBo getSymbole() 
 	{
-		return motif;
+		return symbole;
 	}
 
-	public void setMotif(SymboleBo motif) 
+	public void setSymbole(SymboleBo symbole) 
 	{
-		this.motif = motif;
+		this.symbole = symbole;
 	}
 	
 	public int getId_Card() 
@@ -49,7 +49,7 @@ public class CardBo {
 
 	@Override
 	public boolean equals(Object obj) {
-		return this.motif==((CardBo)obj).motif;
+		return this.symbole==((CardBo)obj).symbole;
 	}
 
 	@Override
@@ -57,9 +57,14 @@ public class CardBo {
 	{
 		if (visible) 
 		{
-			return "|" + motif + "|";
+			return "|" + symbole + "|";
 		}
-		return "|" + MOTIF_CACHE +"|";
+		return "|" + SYMBOLE_CACHE +"|";
+	}
+
+	public void setId_Card(int int1)
+	{
+	this.id_Card = counter; 		
 	}
 
 }

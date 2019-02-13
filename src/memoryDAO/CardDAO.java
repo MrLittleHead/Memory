@@ -19,25 +19,32 @@ public class CardDAO extends DAO <CardBo> {
 		return instance = new CardDAO();     }
 
 	@Override
-	public boolean create(CardBo carte) {
+	public boolean create(CardBo card) {
 		boolean succes = true;
+		
 		try {
-			String requete = ("insert into "+ TABLE +"(motif) values (?)");
+
+			String requete = ("INSERT INTO "+TABLE+" (symboleCarte) VALUES (?, ?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			pst.setInt(2, carte.getMotif());
+			// on pose un String en paramètre 1 -1er '?'- et ce String est le nom de l'avion
+			//pst.setInt(1, card.getId_Card()); //autoincrémentation
+			pst.setString(2, card.getSymbole()); //
+			// on exécute la mise à jour
 			pst.executeUpdate();
+
 			//Récupérer la clé qui a été générée et la pousser dans l'objet initial
 			ResultSet rs = pst.getGeneratedKeys();
-			if(rs.next()) {
-				//car.setId_carte(rs.getInt(1));
+			if (rs.next()) {
+				card.setId_Card(rs.getInt(1));//auto-incrementation ???????
 			}
 
-
 		} catch (SQLException e) {
-			succes =false;
+			succes=false;
 			e.printStackTrace();
 		}
+
 		return succes;
+	}
 	}
 
 	@Override
@@ -46,7 +53,7 @@ public class CardDAO extends DAO <CardBo> {
 		try {
 			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_carte ="+ id) ;
 			if(res.next()){
-				car = new CardBo(res.getInt(2));
+				car = new CardBo(res.getInt(1));
 				car.setId_Card(res.getInt(1)); // creation du set avec implementation auto ?
 			}
 		} catch (SQLException e) {
@@ -54,6 +61,7 @@ public class CardDAO extends DAO <CardBo> {
 			e.printStackTrace();
 		}
 		return car;
+		
 	}
 
 	@Override

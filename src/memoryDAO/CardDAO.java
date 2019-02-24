@@ -26,7 +26,7 @@ public class CardDAO extends DAO <CardBo> {
 
 			String requete = ("INSERT INTO "+TABLE+" (symboleCarte) VALUES (?, ?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			// on pose un String en paramètre 1 -1er '?'- et ce String est le nom de l'avion
+			// on pose un String en paramètre 1 -1er '?'
 			//pst.setInt(1, card.getId_Card()); //autoincrémentation
 			pst.setString(2, card.getSymbole()); //
 			// on exécute la mise à jour
@@ -70,7 +70,7 @@ public class CardDAO extends DAO <CardBo> {
 		try {
 			String requeteUpdate = ("update "+ TABLE +" set motif = ?  where "+CLE_PRIMAIRE+" =?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, car.getMotif());		// transformation de l'enum str en enum int (enum.ordinal?)
+			pst.setInt(1, car.getSymbole().ordinal());		// transformation de l'enum str en enum int (enum.ordinal?)
 			pst.setInt(2, car.getId_Card());
 			pst.executeUpdate();
 		} catch (SQLException e) {

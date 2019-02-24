@@ -4,12 +4,16 @@ public class PlayerBo {
 	private int totalpoint = 0;
 	private int chooseCard1;
 	private int chooseCard2;
-	private String joueur;
+	private String player;
+	private int id_Player;
+	private int counter = 0;
 	
-	public PlayerBo(String joueur) 
+	public PlayerBo(String player) 
 	{
 		super();
-		this.joueur = joueur;
+		this.player = player;
+		this.setId_Player(counter);
+		counter++;
 	}
 	
 	public void takePoint() 
@@ -42,13 +46,26 @@ public class PlayerBo {
 		this.chooseCard1 = numeroCarte;
 	}
 	
-	public String getJoueur() 
+	public String getPlayer() 
 	{
-		return joueur;
+		return player;
 	}
 	
 	public void setJoueur(String joueur) 
 	{
-		this.joueur = joueur;
+		this.player = joueur;
+	}
+
+	public void setId_player(int int1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getId_Player() {
+		return id_Player;
+	}
+
+	public void setId_Player(int id_Player) {
+		this.id_Player = id_Player;
 	}
 }

@@ -27,7 +27,8 @@ public class CardDAO extends DAO <CardBo> {
 			String requete = ("INSERT INTO "+TABLE+" (symboleCarte) VALUES (?, ?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			pst.setInt(1, card.getId_Card()); 
-			pst.setInt(2, card.getSymbole().ordinal()); 
+			pst.setInt(2, card.getSymbole().ordinal()); //
+			// on exécute la mise à jour
 			pst.executeUpdate();
 
 			//Récupérer la clé qui a été générée et la pousser dans l'objet initial

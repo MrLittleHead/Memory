@@ -42,9 +42,16 @@ public class CardBo {
 		this.symbole = symbole;
 	}
 	
+	public void 
+	
 	public int getId_Card() 
 	{
 		return id_Card;
+	}
+	
+	public void setId_Card(int int1)
+	{
+	this.id_Card = counter; 		
 	}
 
 	@Override
@@ -62,10 +69,7 @@ public class CardBo {
 		return "|" + SYMBOLE_CACHE +"|";
 	}
 
-	public void setId_Card(int int1)
-	{
-	this.id_Card = counter; 		
-	}
+
 
 }
 

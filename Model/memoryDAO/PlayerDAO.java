@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import memoryBo.CardBo;
 import memoryBo.PlayerBo;
 
 public class PlayerDAO extends DAO <PlayerBo> 

@@ -3,9 +3,10 @@ package memoryBo;
 public class CardBo {
 	
 	
-	private int id_Card;
+	
 	private final SymboleBo SYMBOLE_CACHE = SymboleBo.get(0);
 	private static int counter = 0;
+	private int id_Card;
 	private boolean visible = false;
 	private SymboleBo symbole;
 

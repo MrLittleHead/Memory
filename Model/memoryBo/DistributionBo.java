@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DistributionBo {
 	
-private List<CardBo> cartes = new ArrayList<CardBo>();
+private List<CardBo> listCard = new ArrayList<CardBo>();
 	
 	public DistributionBo(int nb) 
 	{ 
@@ -16,28 +16,29 @@ private List<CardBo> cartes = new ArrayList<CardBo>();
 		{
 			CardBo c1 = new CardBo(symb);
 			CardBo c2 = new CardBo(symb);
-			this.add(c1);
-			this.add(c2);
+			listCard.add(c1);
+			listCard.add(c2);
 			symb++;
 			if (symb == (SymboleBo.NBR_SYMBOLES-1)) 
 			{
 				symb = 1;
 			}
 		}
-		Collections.shuffle(cartes);
+		Collections.shuffle(listCard);
 	}
+	
 	public int size() {
-		return this.cartes.size();
+		return this.listCard.size();
 	}
-
+	
 	public boolean add(CardBo c) {
-		return this.cartes.add(c);
+		return this.listCard.add(c);
 	}
 
 	public CardBo get(int i) {
-		return this.cartes.get(i);
+		return this.listCard.get(i);
 	}
-
+	
 	public void retournerCarte(int numeroCarte) {
 		this.get(numeroCarte).setVisible(true);
 	}
@@ -47,26 +48,21 @@ private List<CardBo> cartes = new ArrayList<CardBo>();
 	{
 		int i = 1;
 		String rep = "";
-		for (Iterator<CardBo> iterator = cartes.iterator(); iterator.hasNext();) 
-		{
+		for (Iterator<CardBo> iterator = listCard.iterator(); iterator.hasNext();) {
 			CardBo carte = (CardBo) iterator.next();
 
-			if (i < 10) 
-			{
+			if (i < 10)	{
 				rep += i + " ";
 			}
-			else 
-			{
+			else {
 				rep += i;
 			}
 
 			rep += carte.toString();
-			if (i % 5 == 0) 
-			{
+			if (i % 5 == 0) {
 				rep += "\n";
 			}
-			else 
-			{
+			else {
 				rep += " ";
 			}
 			++i;

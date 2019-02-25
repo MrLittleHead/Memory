@@ -2,11 +2,14 @@ package memoryBo;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameBo {
 	
 	public static int counter = 0;
 	public int id_Game;
+	private List<PlayerBo> listPlayer = new ArrayList<PlayerBo>();
 	public String gameName;
 	public String gameDate;
 	
@@ -18,6 +21,10 @@ public class GameBo {
 		this.gameName = gameName;
 		this.gameDate =  LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		++counter;
+	}
+	
+	public void creationListPlayer(int nbPlayer) {
+		 nbPlayer = listPlayer.size() + 1;
 	}
 
 	public int getId_Game() {

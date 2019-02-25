@@ -26,10 +26,8 @@ public class CardDAO extends DAO <CardBo> {
 
 			String requete = ("INSERT INTO "+TABLE+" (symboleCarte) VALUES (?, ?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			// on pose un String en paramètre 1 -1er '?'- et ce String est le nom de l'avion
-			//pst.setInt(1, card.getId_Card()); //autoincrémentation
-			pst.setString(2, card.getSymbole()); //
-			// on exécute la mise à jour
+			pst.setInt(1, card.getId_Card()); 
+			pst.setInt(2, card.getSymbole().ordinal()); 
 			pst.executeUpdate();
 
 			//Récupérer la clé qui a été générée et la pousser dans l'objet initial
@@ -45,33 +43,33 @@ public class CardDAO extends DAO <CardBo> {
 
 		return succes;
 	}
-	}
+	
 
 	@Override
 	public CardBo read(int id) {
-		CardBo car = null;
+		CardBo card = null;
 		try {
 			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_carte ="+ id) ;
 			if(res.next()){
-				car = new CardBo(res.getInt(1));
-				car.setId_Card(res.getInt(1)); // creation du set avec implementation auto ?
+				card = new CardBo(res.getInt(1));
+				card.setId_Card(res.getInt(1)); // creation du set avec implementation auto ?
 			}
 		} catch (SQLException e) {
 			System.out.println("Echec"+e.getMessage());
 			e.printStackTrace();
 		}
-		return car;
+		return card;
 		
 	}
 
 	@Override
-	public boolean update(CardBo car) {
+	public boolean update(CardBo card) {
 		boolean succes = true;
 		try {
-			String requeteUpdate = ("update "+ TABLE +" set motif = ?  where "+CLE_PRIMAIRE+" =?");
+			String requeteUpdate = ("update "+ TABLE +" set symbole = ?  where "+CLE_PRIMAIRE+" =?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, car.getMotif());		// transformation de l'enum str en enum int (enum.ordinal?)
-			pst.setInt(2, car.getId_Card());
+			pst.setInt(1, card.getSymbole().ordinal());		// transformation de l'enum str en enum int (enum.ordinal?)
+			pst.setInt(2, card.getId_Card());
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			succes =false;

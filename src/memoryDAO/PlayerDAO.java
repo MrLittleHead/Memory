@@ -8,15 +8,17 @@ import java.sql.Statement;
 import memoryBo.CardBo;
 import memoryBo.PlayerBo;
 
-public class PlayerDAO {
-	private static final String TABLE ="joueur";
-	private static final String CLE_PRIMAIRE ="id_joueur";
+public class PlayerDAO extends DAO <PlayerBo> 
+{
+	
+	private static final String TABLE ="Player";
+	private static final String CLE_PRIMAIRE ="id_Player";
 
-	private static CardDAO instance=null; //création d'un singleton
+	private static PlayerDAO instance=null; //création d'un singleton
 
-	public static CardDAO getInstance() {         
+	public static PlayerDAO getInstance() {         
 		if(instance==null);         
-		return instance = new CardDAO();     }
+		return instance = new PlayerDAO();     }
 
 	@Override
 	public boolean create(PlayerBo player) {
@@ -24,56 +26,63 @@ public class PlayerDAO {
 		
 		try {
 
-			String requete = ("INSERT INTO "+TABLE+" (symboleCarte) VALUES (?, ?, ?)");
+			String requete = ("INSERT INTO "+TABLE+" (id_Player, pseudo) VALUES (?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			// on pose un String en paramètre 1 -1er '?'
-			//pst.setInt(1, card.getId_Card()); //autoincrémentation
-			pst.setString(2, player.getSymbole()); //
-			// on exécute la mise à jour
+			
+			pst.setInt(2, player.getId_Player()); //
+			pst.setString(2, player.getPseudo());
 			pst.executeUpdate();
 
-			//Récupérer la clé qui a été générée et la pousser dans l'objet initial
 			ResultSet rs = pst.getGeneratedKeys();
-			if (rs.next()) {
-				player.setId_joueur(rs.getInt(1));//auto-incrementation ???????
+			if (rs.next()) 
+			{
+				player.setId_Player(rs.getInt(1));
 			}
 
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			succes=false;
 			e.printStackTrace();
 		}
 
 		return succes;
 	}
-	}
+	
 
 	@Override
-	public CardBo read(int id) {
-		CardBo car = null;
-		try {
-			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_carte ="+ id) ;
-			if(res.next()){
-				car = new CardBo(res.getInt(1));
-				car.setId_Card(res.getInt(1)); // creation du set avec implementation auto ?
+	public PlayerBo read(int id) {
+		PlayerBo player = null;
+		try 
+		{
+			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_Player ="+ id) ;
+			if(res.next())
+			{
+				player = new PlayerBo(res.getString(1));
+				player.setId_Player(res.getInt(1)); 
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			System.out.println("Echec"+e.getMessage());
 			e.printStackTrace();
 		}
-		return car;
+		return player;
 		
 	}
 
 	@Override
-	public boolean update(CardBo car) {
+	public boolean update(PlayerBo player) {
 		boolean succes = true;
-		try {
-			String requeteUpdate = ("update "+ TABLE +" set motif = ?  where "+CLE_PRIMAIRE+" =?");
-			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, car.getSymbole().ordinal());		// transformation de l'enum str en enum int (enum.ordinal?)
-			pst.setInt(2, car.getId_Card());
+		try 
+		{
+			String requeteUpdate = ("update "+ TABLE +" set pseudo = ?  where "+CLE_PRIMAIRE+" =?");
+			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);
+			
+			pst.setInt(1, player.getId_Player());		
+			pst.setString(2, player.getPseudo());
 			pst.executeUpdate();
-		} catch (SQLException e) {
+			
+		} 
+		catch (SQLException e) {
 			succes =false;
 			e.printStackTrace();
 		}
@@ -81,14 +90,16 @@ public class PlayerDAO {
 	}
 
 	@Override
-	public boolean delete(CardBo car) {
+	public boolean delete(PlayerBo player) {
 		boolean succes = true;
-		try {
+		try 
+		{
 			String requeteDelete = (" delete from "+ TABLE +" where "+CLE_PRIMAIRE+" =?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteDelete, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, car.getId_Card());			
+			pst.setInt(1, player.getId_Player());			
 			pst.executeUpdate();
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			succes =false;
 			e.printStackTrace();
 		}

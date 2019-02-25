@@ -42,8 +42,6 @@ public class CardBo {
 		this.symbole = symbole;
 	}
 	
-	public void 
-	
 	public int getId_Card() 
 	{
 		return id_Card;

@@ -7,7 +7,8 @@ import java.sql.Statement;
 
 import memoryBo.CardBo;
 
-public class CardDAO extends DAO <CardBo> {
+public class CardDAO extends DAO <CardBo> 
+{
 	
 	private static final String TABLE ="Carte";
 	private static final String CLE_PRIMAIRE ="id_carte";
@@ -37,7 +38,8 @@ public class CardDAO extends DAO <CardBo> {
 				card.setId_Card(rs.getInt(1));//auto-incrementation ???????
 			}
 
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			succes=false;
 			e.printStackTrace();
 		}
@@ -51,11 +53,12 @@ public class CardDAO extends DAO <CardBo> {
 		CardBo card = null;
 		try {
 			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_carte ="+ id) ;
-			if(res.next()){
+			if(res.next()) {
 				card = new CardBo(res.getInt(1));
 				card.setId_Card(res.getInt(1)); // creation du set avec implementation auto ?
 			}
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			System.out.println("Echec"+e.getMessage());
 			e.printStackTrace();
 		}
@@ -66,13 +69,15 @@ public class CardDAO extends DAO <CardBo> {
 	@Override
 	public boolean update(CardBo card) {
 		boolean succes = true;
-		try {
+		try 
+		{
 			String requeteUpdate = ("update "+ TABLE +" set symbole = ?  where "+CLE_PRIMAIRE+" =?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
 			pst.setInt(1, card.getSymbole().ordinal());		// transformation de l'enum str en enum int (enum.ordinal?)
 			pst.setInt(2, card.getId_Card());
 			pst.executeUpdate();
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			succes =false;
 			e.printStackTrace();
 		}
@@ -87,7 +92,8 @@ public class CardDAO extends DAO <CardBo> {
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteDelete, Statement.RETURN_GENERATED_KEYS);		
 			pst.setInt(1, car.getId_Card());			
 			pst.executeUpdate();
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			succes =false;
 			e.printStackTrace();
 		}

@@ -10,13 +10,13 @@ import memoryBo.CardBo;
 public class CardDAO extends DAO <CardBo> 
 {
 	
-	private static final String TABLE ="Carte";
-	private static final String CLE_PRIMAIRE ="id_carte";
+	private static final String TABLE = "Carte";
+	private static final String CLE_PRIMAIRE = "id_carte";
 
-	private static CardDAO instance=null; //création d'un singleton
+	private static CardDAO instance = null; //création d'un singleton
 
 	public static CardDAO getInstance() {         
-		if(instance==null);         
+		if(instance == null);         
 		return instance = new CardDAO();     }
 
 	@Override

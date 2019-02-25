@@ -1,6 +1,6 @@
 package memoryDAO;
 
-public class PartieDAO<T> {
+public class GameDAO<T> {
 
 
 	

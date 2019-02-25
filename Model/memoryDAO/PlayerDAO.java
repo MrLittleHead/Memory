@@ -11,13 +11,13 @@ import memoryBo.PlayerBo;
 public class PlayerDAO extends DAO <PlayerBo> 
 {
 	
-	private static final String TABLE ="Player";
-	private static final String CLE_PRIMAIRE ="id_Player";
+	private static final String TABLE = "Player";
+	private static final String CLE_PRIMAIRE = "id_Player";
 
-	private static PlayerDAO instance=null; //création d'un singleton
+	private static PlayerDAO instance = null; //création d'un singleton
 
 	public static PlayerDAO getInstance() {         
-		if(instance==null);         
+		if(instance == null);         
 		return instance = new PlayerDAO();     }
 
 	@Override

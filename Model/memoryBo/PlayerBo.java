@@ -5,9 +5,9 @@ public class PlayerBo
 	
 	private static int counter = 0;
 	private int id_Player;
-	private int totalPoint = 0;
-	private int chooseCard1;
-	private int chooseCard2;
+	private int totalPoint = 0;			// a deplacer dans ParticipationBo
+	private int chooseCard1;			// idem
+	private int chooseCard2;			// idem
 	private String pseudo;
 	
 	
@@ -68,6 +68,11 @@ public class PlayerBo
 	public String getPlayer() 
 	{
 		return pseudo;
+	}
+
+	@Override
+	public String toString() {
+		return " [pseudo=" + pseudo + "]";
 	}
 	
 }

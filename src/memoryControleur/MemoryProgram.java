@@ -5,22 +5,25 @@ import java.util.List;
 import java.util.Scanner;
 
 import memoryBo.DistributionBo;
+import memoryBo.GameBo;
 import memoryBo.PlayerBo;
 import memoryBo.ScorePlayerBo;
 
 public class MemoryProgram {
 
-	private PlayerBo joueurActuel = null;
+	private PlayerBo currentPlayer = null;
+	private GameBo currentGame = null;
 	private int nbPlayer;
 	private List<PlayerBo> listPlayerBo = new ArrayList<PlayerBo>(nbPlayer);
-	private int nbrCartesRetournees = 0;
-	private int cartechoisie1;
-	private int cartechoisie2;
-	private int nbrCartes;
+	public static List<GameBo> listGame = new ArrayList<GameBo>();
+	private int nbChoosenCard = 0;
+	private int choosenCard;
+	private int choosenCard2;
+	private int nbCard;
 
 
 
-	public int saisirCarte(PlayerBo player, Scanner scan, DistributionBo p) 
+	public int ChooseCard(PlayerBo player, Scanner scan, DistributionBo listCard) 
 	{
 		System.out.print(player.getPseudo() + " Choisissez une carte : ");
 		while (!scan.hasNextInt()) 
@@ -28,8 +31,8 @@ public class MemoryProgram {
 			System.out.print(player.getPseudo() + " Caractère inconnu, rechoisissez une premiere carte  : ");
 			scan.next();
 		}
-		int carte =	scan.nextInt() - 1;
-		while (carte >= nbrCartes || carte < 0 || p.get(carte).isVisible() ) 
+		int card =	scan.nextInt() - 1;
+		while (card >= nbCard || card < 0 || listCard.get(card).isVisible() ) 
 		{
 			System.out.print(player.getPseudo() + "Numero de carte invalide, rechoisissez une premiere carte : ");
 			while (!scan.hasNextInt()) 
@@ -37,47 +40,49 @@ public class MemoryProgram {
 				System.out.print(player.getPseudo() + " Caractère inconnu, rechoisissez une premiere carte  : ");
 				scan.next();
 			}
-			carte =	scan.nextInt()-1;
+			card =	scan.nextInt() - 1; // -1 car pour plus de facilité pour choisir la carte 0 on designe la carte 1
 		}
-		return carte;
+		return card;
 	}
 
-	public void jouer(Scanner scan, DistributionBo p) 
-
+	public void play(Scanner scan, DistributionBo listCard) 
 	{
-		cartechoisie1 = saisirCarte(joueurActuel, scan, p);
-
-		joueurActuel.setChoisirCarte1(cartechoisie1);
-		p.retournerCarte(cartechoisie1);
-		System.out.println(p.toString());
-
-
-		cartechoisie2 = saisirCarte(joueurActuel, scan, p);
-
-		joueurActuel.setChoisirCarte2(cartechoisie2);
-		p.retournerCarte(cartechoisie2);
-		System.out.println(p.toString());
-		if (! p.get(cartechoisie1).equals(p.get(cartechoisie2))) 
+		currentPlayer.ChooseCard(choosenCard);
+		listCard.returnChoosenCard(choosenCard);
+		currentPlayer.ChoosenCard(choosenCard2);
+		listCard.returnChoosenCard(choosenCard2);
+		System.out.println(listCard.toString());
+		
+		if (! listCard.get(choosenCard).equals(listCard.get(choosenCard2))) 
 		{
-			p.get(cartechoisie1).setVisible(false);
-			p.get(cartechoisie2).setVisible(false);
+			listCard.get(choosenCard).setVisible(false);
+			listCard.get(choosenCard2).setVisible(false);
 
-			if (joueurActuel == listPlayerBo.get(0)) {
-				joueurActuel = listPlayerBo.get(1);
-			}
-			else 
-			{
-				joueurActuel = listPlayerBo.get(0);
+			currentPlayer = listPlayerBo.get(+1); // a Tester
+			if (currentPlayer == listPlayerBo.get(nbPlayer + 1)) {
+				currentPlayer = listPlayerBo.get(1);		
 			}
 		}
 		else 
 		{
-			joueurActuel.gagnerdespoints();
-			System.out.println("Totaldepoints " + joueurActuel + " " + joueurActuel.getTotaldepoints());
-			nbrCartesRetournees += 2;
+			ScorePlayerBo.findPairCard(currentPlayer, currentGame, ScorePlayerBo.getScore(currentPlayer, currentGame);
+			System.out.println("Total Score : " + currentPlayer + " " + ScorePlayerBo.getScore(currentPlayer, currentGame));
+			nbChoosenCard += 2;
 		}
 	}
 
+	public GameBo creationGame() {
+		
+		System.out.println("entrez un nom de partie :");
+		Scanner scanNameGame = new Scanner(System.in);
+		scanNameGame.next();
+		GameBo game = new GameBo(scanNameGame);
+		listGame.add(game);
+		currentGame = game;
+		return currentGame;
+	}
+	
+	
 	public MemoryProgram() 
 	{
 
@@ -95,14 +100,15 @@ public class MemoryProgram {
 		}
 		nbPlayer =	scanNbPlayer.nextInt();
 		scanNbPlayer.close();
-		for (int i = 1; i < listPlayerBo.size(); i++) {
+		
+		for (int i = 0; i < listPlayerBo.size(); i++) {
 			System.out.print("Saisissez le nom du player" + i +":");
 			Scanner scanPseudoPlayer = new Scanner(System.in);
-			PlayerBo p = new PlayerBo("Joueur ");
+			PlayerBo p = new PlayerBo("");
 			listPlayerBo.add(p);
 		}
 		
-		joueurActuel = listPlayerBo.get(0);
+		currentPlayer = listPlayerBo.get(0);
 		
 
 		System.out.print("Saisissez votre nombre de cartes : ");
@@ -110,51 +116,41 @@ public class MemoryProgram {
 		System.out.println("toujours rien lu");
 		while (!scanNbCard.hasNextInt()) 
 		{
-			System.out.print(PlayerBo.getPseudo() + " Caractère inconnu, rechoisissez une premiere carte  : ");
+			System.out.print( " Caractère inconnu, rechoisissez une premiere carte  : ");
 			scanNbCard.next();
 		}
-		nbrCartes =	scanNbCard.nextInt(); 
-		while (nbrCartes % 2 == 1) 
+		nbCard =	scanNbCard.nextInt(); 
+		while (nbCard % 2 == 1) 
 		{
 			System.out.println("Nombre de Cartes invalide (impaire)!");
 			System.out.print("Ressaisissez votre nombre de cartes : ");
 			while (!scanNbCard.hasNextInt()) 
 			{
-				System.out.print(pseudo.getPseudo() + "Caractère inconnu, rechoisissez une premiere carte  : ");
+				System.out.print(currentPlayer + "Caractère inconnu, rechoisissez une premiere carte  : ");
 				scanNbCard.next();
 			}
-			nbrCartes =	scanNbCard.nextInt();
+			nbCard =	scanNbCard.nextInt();
 		}
 
 		System.out.println("            C'est parti");
-		DistributionBo p = new DistributionBo(nbrCartes);
+		DistributionBo p = new DistributionBo(nbCard);
 		System.out.println(p.toString());
 		//update
-		while (nbrCartesRetournees != nbrCartes) 
+		while (nbChoosenCard != nbCard) 
 		{
-			sauvegarde();
-			this.jouer(scanNbCard, p);
+			
+			this.play(scanNbCard, p);
 		}
-		/*if (joueur1.getTotaldepoints() > joueur2.getTotaldepoints())
+		if (joueur1.getTotaldepoints() > joueur2.getTotaldepoints())
 		{
 			System.out.println("Joueur 1 GAGNE !!!!!!!! ");
 		}
-		else if (joueur2.getTotaldepoints() > joueur1.getTotaldepoints())
-		{
-			System.out.println("Joueur 2 GAGNE !!!!!!!! ");
-		}*/
+	
 		else 
 		{
 			System.out.println("Match NUL ! ");
 		}
-		System.out.println("Player "+ PlayerBo.getPseudo() + " à : " + ScorePlayerBo.getScore());
-
 		scanNbCard.close();
-	}
-
-	private void sauvegarde() {
-
-
 	}
 
 }

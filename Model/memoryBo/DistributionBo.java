@@ -39,8 +39,8 @@ private List<CardBo> listCard = new ArrayList<CardBo>();
 		return this.listCard.get(i);
 	}
 	
-	public void retournerCarte(int numeroCarte) {
-		this.get(numeroCarte).setVisible(true);
+	public void returnChoosenCard(int cardPosition) {
+		this.get(cardPosition).setVisible(true);
 	}
 
 	@Override

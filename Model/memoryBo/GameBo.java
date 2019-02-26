@@ -4,27 +4,31 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameBo {
 	
 	public static int counter = 0;
 	public int id_Game;
-	private List<PlayerBo> listPlayer = new ArrayList<PlayerBo>();
-	public String gameName;
+	public Scanner gameName;
 	public String gameDate;
 	
 	
 	
-	public GameBo(String gameName) {
+	public GameBo(Scanner scanNameGame) {
 		super();
 		this.id_Game = counter;
-		this.gameName = gameName;
+		this.gameName = scanNameGame;
 		this.gameDate =  LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 		++counter;
 	}
 	
-	public void creationListPlayer(int nbPlayer) {
-		 nbPlayer = listPlayer.size() + 1;
+	public Scanner getGameName() {
+		return gameName;
+	}
+
+	public void setGameName(Scanner gameName) {
+		this.gameName = gameName;
 	}
 
 	public int getId_Game() {

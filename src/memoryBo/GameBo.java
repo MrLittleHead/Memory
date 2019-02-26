@@ -13,8 +13,6 @@ public class GameBo {
 	public Scanner gameName;
 	public String gameDate;
 	
-	
-	
 	public GameBo(Scanner scanNameGame) {
 		super();
 		this.id_Game = counter;

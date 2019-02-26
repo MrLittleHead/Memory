@@ -5,7 +5,7 @@ public class ScorePlayerBo {
 	
 	public int score = 0;
 
-	public ScorePlayerBo(PlayerBo pseudo, GameBo id_Game, int score) {
+	public ScorePlayerBo(PlayerBo pseudo, int id_Game, int score) {
 		super();
 		this.score = score;
 	}

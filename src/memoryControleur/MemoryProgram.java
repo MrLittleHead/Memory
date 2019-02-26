@@ -29,7 +29,7 @@ public class MemoryProgram {
 	//mes intentions =  - creer une liste de joueurs 
 					//	- creer une liste de score associé (un tableau serai sans doute mieux) :s
 					//	- on passe au joueur et score suivant de la liste en cas d'echec findCard
-	
+					// il manque les conditions de victoire et je dois refaire le CRUD + BD (Anglais oblige)
 	//a terme je veux supprimer les scan et faire une IHM
 
 	private void gameCreation() {

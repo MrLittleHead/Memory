@@ -50,7 +50,7 @@ public class MemoryProgram {
 
 		while (!scanGame.hasNextInt())
 		{
-			System.out.print(" Caract�re inconnu, rechoisissez un nombre de joueurs  : ");
+			System.out.print(" Caractère inconnu, rechoisissez un nombre de joueurs  : ");
 			scanGame.next();
 		}
 
@@ -72,7 +72,7 @@ public class MemoryProgram {
 		System.out.print("Saisissez votre nombre de cartes : ");
 		while (!scanGame.hasNextInt())
 		{
-			System.out.print(" Caract�re inconnu, rechoisissez votre nombre de cartes  : ");
+			System.out.print(" Caractère inconnu, rechoisissez votre nombre de cartes  : ");
 			scanGame.next();
 		}
 		nbCard = scanGame.nextInt();
@@ -82,7 +82,7 @@ public class MemoryProgram {
 			System.out.print("Ressaisissez votre nombre de cartes : ");
 			while (!scanGame.hasNextInt())
 			{
-				System.out.print(currentPlayer + "Caract�re inconnu, rechoisissez votre nombre de cartes  : ");
+				System.out.print(currentPlayer + "Caractère inconnu, rechoisissez votre nombre de cartes  : ");
 				scanGame.next();
 			}
 			nbCard = scanGame.nextInt();
@@ -96,7 +96,7 @@ public class MemoryProgram {
 		System.out.print(player.getPseudo() + " Choisissez une carte : ");
 		while (!scanGame.hasNextInt()) 
 		{
-			System.out.print(player.getPseudo() + " Caract�re inconnu, rechoisissez une premiere carte  : ");
+			System.out.print(player.getPseudo() + " Caractère inconnu, rechoisissez une premiere carte  : ");
 			scanGame.next();
 		}
 		choosenCard = scanGame.nextInt() - 1;
@@ -105,7 +105,7 @@ public class MemoryProgram {
 			System.out.print(player.getPseudo() + "Numero de carte invalide, rechoisissez de nouveau carte : ");
 			while (!scanGame.hasNextInt()) 
 			{
-				System.out.print(player.getPseudo() + " Caract�re inconnu, rechoisissez de nouveau une carte  : ");
+				System.out.print(player.getPseudo() + " Caractère inconnu, rechoisissez de nouveau une carte  : ");
 				scanGame.next();
 			}
 			choosenCard = scanGame.nextInt() - 1; // -1 car pour plus de facilit� pour choisir la carte 0 on designe la carte 1

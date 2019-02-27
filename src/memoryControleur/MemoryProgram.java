@@ -2,6 +2,7 @@ package memoryControleur;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 import memoryBo.DistributionBo;
@@ -50,8 +51,8 @@ public class MemoryProgram {
 
 		while (!scanGame.hasNextInt())
 		{
-			System.out.print( " Caract�re inconnu, rechoisissez un nombre de joueurs  : ");
-			scanGame.nextInt();
+			System.out.print(" Caract�re inconnu, rechoisissez un nombre de joueurs  : ");
+			scanGame.next();
 		}
 
 		nbPlayer = scanGame.nextInt();
@@ -72,8 +73,8 @@ public class MemoryProgram {
 		System.out.print("Saisissez votre nombre de cartes : ");
 		while (!scanGame.hasNextInt())
 		{
-			System.out.print( " Caract�re inconnu, rechoisissez votre nombre de cartes  : ");
-			scanGame.nextInt();
+			System.out.print(" Caract�re inconnu, rechoisissez votre nombre de cartes  : ");
+			scanGame.next();
 		}
 		nbCard = scanGame.nextInt();
 		while (nbCard % 2 == 1)
@@ -83,7 +84,7 @@ public class MemoryProgram {
 			while (!scanGame.hasNextInt())
 			{
 				System.out.print(currentPlayer + "Caract�re inconnu, rechoisissez votre nombre de cartes  : ");
-				scanGame.nextInt();
+				scanGame.next();
 			}
 			nbCard = scanGame.nextInt();
 		}
@@ -130,15 +131,16 @@ public class MemoryProgram {
 				System.out.println(listCard.toString());
 			}
 		}
-		if (! listCard.get(choosenCard).equals(listCard.get(choosenCard2))) 
+		if (!listCard.get(choosenCard).equals(listCard.get(choosenCard2))) 
 		{
 			listCard.get(choosenCard).setVisible(false);
 			listCard.get(choosenCard2).setVisible(false);
-			currentPlayer = listPlayerBo.get(+1);	// a Tester vraiment pas sur de moi j'essaye de faire passer au joueur next
-			currentScore = listScore.get(+1);		//idem pour le score
-			if (currentPlayer == listPlayerBo.get(nbPlayer + 1)) {
-				currentPlayer = listPlayerBo.get(1);
-			}
+			
+			if ((currentPlayer.getId_Player() + 1) < nbPlayer)
+				currentPlayer = listPlayerBo.get(currentPlayer.getId_Player() + 1);
+			else
+				currentPlayer = listPlayerBo.get(0);
+			currentScore = listScore.get(currentPlayer.getId_Player()); //idem pour le score
 		}
 		else
 		{

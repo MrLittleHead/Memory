@@ -20,7 +20,8 @@ public class MemoryProgram {
 	private int nbCard;
 	
 	
-	
+	private List<PlayerBo> listPlayerBo = new ArrayList<PlayerBo>(nbPlayer);
+	private List<ScorePlayerBo> listScore = new ArrayList<ScorePlayerBo>(nbPlayer);
 	private static List<GameBo> listGame = new ArrayList<GameBo>();
 	
 
@@ -56,11 +57,8 @@ public class MemoryProgram {
 		}
 
 		nbPlayer =	scanNbPlayer.nextInt();
-		
-		List<PlayerBo> listPlayerBo = new ArrayList<PlayerBo>(nbPlayer);
-		List<ScorePlayerBo> listScore = new ArrayList<ScorePlayerBo>(nbPlayer);
 
-		for (int i = 0; i < listPlayerBo.size(); i++) {
+		for (int i = 0; i < nbPlayer; i++) {
 			System.out.print("Saisissez le nom du player" + i +" :");
 			Scanner scanPseudoPlayer = new Scanner(System.in);
 			PlayerBo pseudo = new PlayerBo(scanPseudoPlayer);
@@ -68,6 +66,7 @@ public class MemoryProgram {
 			ScorePlayerBo score = new ScorePlayerBo(pseudo, currentGame.getId_Game(), 0);
 			listScore.add(score);
 		}
+		
 		currentPlayer = listPlayerBo.get(0);
 		currentScore  = listScore.get(0);
 		scanNbPlayer.close();

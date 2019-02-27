@@ -2,7 +2,6 @@ package memoryControleur;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Scanner;
 
 import memoryBo.DistributionBo;
@@ -150,7 +149,7 @@ public class MemoryProgram {
 		}
 	}
 
-	public MemoryProgram() 
+	public MemoryProgram()
 	{
 		System.out.println("---------------Memory---------------");
 

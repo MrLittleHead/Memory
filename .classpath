@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Public/Documents/JAVA BD/sqljdbc_4.2/fra/sqljdbc41.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Public/Documents/JAVA BD/sqljdbc_4.2/fra/sqljdbc42.jar"/>
+	<classpathentry kind="lib" path="D:/Libs/Java/SQL/sqljdbc41.jar"/>
+	<classpathentry kind="lib" path="D:/Libs/Java/SQL/sqljdbc42.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

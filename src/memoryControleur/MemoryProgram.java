@@ -55,13 +55,12 @@ public class MemoryProgram {
 		}
 
 		nbPlayer = scanGame.nextInt();
-		Scanner scanPseudoPlayer = new Scanner(System.in);
 		for (int i = 0; i < nbPlayer; i++) {
 			System.out.print("Saisissez le nom du player " + i + " :");
-			scanPseudoPlayer.next();
-			PlayerBo pseudo = new PlayerBo(scanPseudoPlayer);
-			listPlayerBo.add(pseudo);
-			ScorePlayerBo score = new ScorePlayerBo(pseudo, currentGame.getId_Game(), 0);
+			String name = scanGame.next();
+			PlayerBo player = new PlayerBo(name);
+			listPlayerBo.add(player);
+			ScorePlayerBo score = new ScorePlayerBo(player, currentGame.getId_Game(), 0);
 			listScore.add(score);
 		}
 		currentPlayer = listPlayerBo.get(0);
@@ -76,6 +75,7 @@ public class MemoryProgram {
 			System.out.print( " Caract�re inconnu, rechoisissez votre nombre de cartes  : ");
 			scanGame.nextInt();
 		}
+		nbCard = scanGame.nextInt();
 		while (nbCard % 2 == 1)
 		{
 			System.out.println("Nombre de Cartes invalide (impaire)!");
@@ -88,6 +88,7 @@ public class MemoryProgram {
 			nbCard = scanGame.nextInt();
 		}
 	}
+	
 	private int ChooseCard(PlayerBo player, DistributionBo listCard) 
 	{
 		int choosenCard;
@@ -107,7 +108,7 @@ public class MemoryProgram {
 				System.out.print(player.getPseudo() + " Caract�re inconnu, rechoisissez de nouveau une carte  : ");
 				scanGame.next();
 			}
-			choosenCard =	scanGame.nextInt() - 1; // -1 car pour plus de facilit� pour choisir la carte 0 on designe la carte 1
+			choosenCard = scanGame.nextInt() - 1; // -1 car pour plus de facilit� pour choisir la carte 0 on designe la carte 1
 		}
 		return choosenCard;
 	}

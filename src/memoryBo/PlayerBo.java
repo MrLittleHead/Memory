@@ -1,20 +1,18 @@
 package memoryBo;
 
-import java.util.Scanner;
-
 public class PlayerBo 
 {
 	
 	private static int counter = 0;
 	private int id_Player;
-	private Scanner pseudo;
+	private String pseudo;
 	
 	
 	
-	public PlayerBo(Scanner scanPseudoPlayer) 
+	public PlayerBo(String playerPseudo) 
 	{
 		super();
-		this.pseudo = scanPseudoPlayer;
+		this.pseudo = playerPseudo;
 		this.id_Player = counter;
 		++ counter;
 		
@@ -30,17 +28,17 @@ public class PlayerBo
 		this.id_Player = id_Player;
 	}
 	
-	public Scanner getPseudo() 
+	public String getPseudo() 
 	{
 		return pseudo;
 	}
 
-	public void setPseudo(Scanner pseudo) 
+	public void setPseudo(String pseudo) 
 	{
 		this.pseudo = pseudo;
 	}
 	
-	public Scanner getPlayer() 
+	public String getPlayer() 
 	{
 		return pseudo;
 	}

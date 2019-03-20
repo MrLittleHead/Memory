@@ -14,7 +14,7 @@ public class PlayerBo
 		super();
 		this.pseudo = playerPseudo;
 		this.id_Player = counter;
-		++ counter;
+		++counter;
 		
 	}
 	
@@ -45,7 +45,7 @@ public class PlayerBo
 
 	@Override
 	public String toString() {
-		return " [pseudo=" + pseudo + "]";
+		return " [" + pseudo + "]";
 	}
 	
 }

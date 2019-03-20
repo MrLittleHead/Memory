@@ -34,11 +34,10 @@ public class MemoryProgram {
 	//a terme je veux supprimer les scan et faire une IHM
 
 	private void gameCreation() {
-
+		
 		System.out.println("entrez un nom de partie :");
-		scanGame.next();
-
-		GameBo game = new GameBo(scanGame);
+		String nameGame = scanGame.next();
+		GameBo game = new GameBo(nameGame);
 
 		listGame.add(game);
 		currentGame = game;

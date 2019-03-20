@@ -1,31 +1,28 @@
 package memoryBo;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.Date;
 
 public class GameBo {
 	
+	private java.util.Date date  = new java.util.Date();
 	public static int counter = 0;
 	public int id_Game;
-	public Scanner gameName;
-	public String gameDate;
+	public String gameName;
+	public java.sql.Date gameDate;
 	
-	public GameBo(Scanner scanNameGame) {
+	public GameBo(String gameName) {
 		super();
 		this.id_Game = counter;
-		this.gameName = scanNameGame;
-		this.gameDate =  LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		this.gameName = gameName;
+		this.gameDate =  new java.sql.Date(date.getTime());
 		++counter;
 	}
 	
-	public Scanner getGameName() {
+	public String getGameName() {
 		return gameName;
 	}
 
-	public void setGameName(Scanner gameName) {
+	public void setGameName(String gameName) {
 		this.gameName = gameName;
 	}
 
@@ -37,12 +34,12 @@ public class GameBo {
 		this.id_Game = id_Game;
 	}
 
-	public String getGameDate() {
+	public java.sql.Date getGameDate() {
 		return gameDate;
 	}
 
-	public void setGameDate(String gameDate) {
-		this.gameDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	public void setGameDate(java.sql.Date gameDate) {
+		this.gameDate = new java.sql.Date(date.getTime());
 	}
 
 	

@@ -2,15 +2,30 @@ package memoryBo;
 
 public class ParticipationBo {
 	
-	public int positionTour = 0;
-	public boolean main = true;
+	public int positionTour;
+	public boolean hand = true;
 
 	
 
-	public ParticipationBo(PlayerBo id_Player, GameBo id_Game, boolean main,ScorePlayerBo score, int positionTour ) {
+	public ParticipationBo(GameBo id_Game, PlayerBo id_Player, ScorePlayerBo score, boolean hand, int positionTour ) {
 		super();
 		
 	}
 
-	
+	public int getPositionTour() {
+		return positionTour;
+	}
+
+	public void setPositionTour(int positionTour) {
+		this.positionTour = positionTour;
+	}
+
+	public boolean isMain() {
+		return hand;
+	}
+
+	public void setHand(boolean hand) {
+		this.hand = hand;
+	}
+
 }

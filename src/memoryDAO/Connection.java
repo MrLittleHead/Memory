@@ -19,9 +19,7 @@ public class Connection {
 	private static final String NOM_SERVEUR = "localhost\\SQLEXPRESS";
 	private static final String NOM_BD = "Memory";
 
-	private static final int LARGEUR_COLONNE_TEXTE = 10;
-	private static final int LARGEUR_COLONNE_ENTIER = 6;
-	private static final int LARGEUR_COLONNE_DATE = 11;
+
 
 	/**
 	 * Patron de conception Singleton

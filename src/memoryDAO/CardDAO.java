@@ -52,7 +52,7 @@ public class CardDAO extends DAO <CardBo>
 	public CardBo read(int id) {
 		CardBo card = null;
 		try {
-			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_carte ="+ id) ;
+			ResultSet res = Connection.executeQuery("SELECT * FROM "+TABLE+" where id_carte ="+ id) ;
 			if(res.next()) {
 				card = new CardBo(res.getInt(1));
 				card.setId_Card(res.getInt(1)); // creation du set avec implementation auto ?

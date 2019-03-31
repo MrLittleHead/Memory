@@ -1,14 +1,12 @@
 package memoryBo;
 
-import java.util.Date;
-
 public class GameBo {
 	
 	private java.util.Date date  = new java.util.Date();
-	public static int counter = 0;
-	public int id_Game;
-	public String gameName;
-	public java.sql.Date gameDate;
+	private static int counter = 0;
+	private int id_Game;
+	private String gameName;
+	private java.sql.Date gameDate;
 	
 	public GameBo(String gameName) {
 		super();

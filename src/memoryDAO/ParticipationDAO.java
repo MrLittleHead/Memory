@@ -4,12 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import memoryBo.CardBo;
 import memoryBo.GameBo;
 import memoryBo.ParticipationBo;
 import memoryBo.PlayerBo;
-import memoryBo.ScorePlayerBo;
+
 
 public class ParticipationDAO extends DAO<ParticipationBo> {
 
@@ -33,8 +34,8 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 		{
 			String requete = ("INSERT INTO "+TABLE+" (id_Game, id_Player, scorePlayer, hand, positionTour) VALUES (?, ?, ?, ?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			pst.setInt(1, part.getId_Game()); 
-			pst.setInt(2, part.getId_Player());
+			pst.setInt(1, part.getGame().getId_Game()); 
+			pst.setInt(2, part.getPlayer().getId_Player());
 			pst.setInt(3, part.getScorePlayer());
 			pst.setBoolean(4, part.isHand());
 			pst.setInt(5, part.getPositionTour());
@@ -52,27 +53,27 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 	@Override
 	public ParticipationBo read(int id) 
 	{
-		ParticipationBo part = null;
+
 		try 
 		{
-			ResultSet res = Connection.executeQuery("SELECT * FROM "+TABLE+" where id_Game = ? ") ;
-			if(res.next()) 
+			String requete = "SELECT id_Player, scorePlayer, hand, playerPosition WHERE id_Game = " + id;
+			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
+			ResultSet rs = pst.executeQuery();
+			if(rs.next()) 
 			{
-				part = new ParticipationBo(id, id, id, false, id);
-				part.setId_Game(res.getInt(1));
-				part.setId_Player(res.getInt(2));
-				part.setScorePlayer(res.getInt(3));
-				part.setHand(res.getBoolean(4));
-				part.setPositionTour());
+				do {
+					rs.getInt("id_Player");
+					rs.getInt("hand");
+					rs.getInt("scorePlayer");
+					rs.getInt("playerPosition");
+				}
+				while(rs.next()!= false);
 			}
 		} 
-		catch (SQLException e) 
-		{
-			System.out.println("Echec"+e.getMessage());
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return part;
-
+		return ;	
 	}
 
 	@Override

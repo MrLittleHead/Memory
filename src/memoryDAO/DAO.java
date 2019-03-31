@@ -1,5 +1,9 @@
 package memoryDAO;
 
+import java.util.ArrayList;
+
+import memoryBo.ParticipationBo;
+
 public abstract class DAO<T> {
 
 	public abstract boolean create(T obj);

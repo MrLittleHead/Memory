@@ -2,49 +2,78 @@ package memoryBo;
 
 public class ParticipationBo {
 	
-	public int positionTour;	
-	public int scorePlayer = 0;
-	public boolean hand = false;
+	private GameBo game;
+	private PlayerBo player; 
+	private int positionTour;	
+	private int scorePlayer = 0;
+	private boolean hand = false;
 
-	public ParticipationBo(int id_Game, int id_Player, int scorePlayer, boolean hand, int positionTour ) {
-		super();		
+	public ParticipationBo(GameBo game, PlayerBo player, int scorePlayer, boolean hand, int positionTour ) 
+	{
+		super();
+		this.game = game;
+		this.player = player;
+		this.hand = hand;
+		this.scorePlayer = scorePlayer;
+		this.positionTour = positionTour;	
 	}
 	
+
+	public GameBo getGame() {
+		return game;
+	}
+
+
+	public void setGame(GameBo game) {
+		this.game = game;
+	}
+
+
+	public PlayerBo getPlayer() {
+		return player;
+	}
+
+
+	public void setPlayer(PlayerBo player) {
+		this.player = player;
+	}
+
+
 	public int getPositionTour() {
 		return positionTour;
 	}
+
 
 	public void setPositionTour(int positionTour) {
 		this.positionTour = positionTour;
 	}
 
-	public boolean isHand() {
-		return this.hand;
-	}
-	
-	public void setHand(boolean hand) {
-		this.hand = hand;
-	}
-	
+
 	public int getScorePlayer() {
 		return scorePlayer;
 	}
 
+
 	public void setScorePlayer(int scorePlayer) {
 		this.scorePlayer = scorePlayer;
 	}
-	
+
+
+	public boolean isHand() {
+		return hand;
+	}
+
+
+	public void setHand(boolean hand) {
+		this.hand = hand;
+	}
+
+
 	public void findPairCard() {
 		scorePlayer++;
 	}
 
-	public int getId_Game() {
-		return this.getId_Game();
-	}
 
-	public int getId_Player() {
-		return this.getId_Player();
-	}
 
 
 

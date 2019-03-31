@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import memoryBo.CardBo;
 import memoryBo.GameBo;
@@ -17,7 +18,7 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 	private static final String TABLE = "Participation";
 	private static final String CLE_PRIMAIRE = "id_Game, id_Player";
 
-	private static ParticipationDAO instance = null; //création d'un singleton
+	private static ParticipationDAO instance = null; //crï¿½ation d'un singleton
 
 
 	public static ParticipationDAO getInstance() 
@@ -51,29 +52,41 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 	}
 
 	@Override
-	public ParticipationBo read(int id) 
+	public ParticipationBo read(int id_game) 
 	{
-
+		List<ParticipationBo> listParticipation = null;
+		ParticipationBo part = null;
 		try 
 		{
-			String requete = "SELECT id_Player, scorePlayer, hand, playerPosition WHERE id_Game = " + id;
+			String requete = "SELECT COUNT(*) AS nb FROM " + TABLE + " WHERE id_Game = " + id_game;
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			ResultSet rs = pst.executeQuery();
-			if(rs.next()) 
+			int nbPlayers = 0;
+			if (rs.next() != false)
 			{
-				do {
-					rs.getInt("id_Player");
-					rs.getInt("hand");
-					rs.getInt("scorePlayer");
-					rs.getInt("playerPosition");
-				}
-				while(rs.next()!= false);
+				 nbPlayers= rs.getInt("nb");
+				 listParticipation = new ArrayList<ParticipationBo>(nbPlayers);				
 			}
-		} 
+			else
+			{
+				//TODO erreur pas de joueurs
+			}
+			requete = "SELECT id_Player, scorePlayer, hand, playerPosition WHERE id_Game = " + id_game;
+			pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
+			rs = pst.executeQuery();
+			if (rs.next() != false)
+			{
+				do
+				{					
+					part = new ParticipationBo(id_game, rs.getInt("id_Player"), rs.getInt("scorePlayer"), rs.getBoolean("hand"), rs.getInt("playerPosition"));
+					listParticipation.add(part);
+				} while (rs.next() != false);				
+			}
+		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return ;	
+		return part;
 	}
 
 	@Override

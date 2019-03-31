@@ -2,13 +2,13 @@ package memoryBo;
 
 public class ParticipationBo {
 	
-	private GameBo game;
-	private PlayerBo player; 
+	private int game;
+	private int player; 
 	private int positionTour;	
 	private int scorePlayer = 0;
 	private boolean hand = false;
 
-	public ParticipationBo(GameBo game, PlayerBo player, int scorePlayer, boolean hand, int positionTour ) 
+	public ParticipationBo(int game, int player, int scorePlayer, boolean hand, int positionTour ) 
 	{
 		super();
 		this.game = game;

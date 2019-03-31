@@ -36,7 +36,7 @@ public class MemoryProgram {
 
 		while (!(choice == (int)choice)) // le choix ne peut pas etre autre chose qu'un int
 		{
-			System.out.print(" Caractère invalide. Ressaissez votre choix : ");
+			System.out.print(" Caractï¿½re invalide. Ressaissez votre choix : ");
 			scanGame.next();
 		}
 		
@@ -88,7 +88,7 @@ public class MemoryProgram {
 			String name = scanGame.next();
 			PlayerBo player = new PlayerBo(name);
 			listPlayer.add(player);
-			ParticipationBo part = new ParticipationBo(player.getId_Player(), currentGame.getId_Game(), 0, false, i);
+			ParticipationBo part = new ParticipationBo(currentGame.getId_Game(), player.getId_Player(), 0, false, i);
 			listParticipation.add(part);
 		}
 		currentPlayer = listPlayer.get(0);

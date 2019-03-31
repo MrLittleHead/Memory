@@ -53,7 +53,7 @@ public class PlayerDAO extends DAO <PlayerBo>
 		PlayerBo player = null;
 		try 
 		{
-			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_Player ="+ id) ;
+			ResultSet res = Connection.executeQuery("SELECT * FROM player where "+ CLE_PRIMAIRE +"= "+ id) ;
 			if(res.next())
 			{
 				player = new PlayerBo(res.getString(1));

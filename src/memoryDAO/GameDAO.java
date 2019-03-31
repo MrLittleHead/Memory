@@ -20,22 +20,22 @@ public class GameDAO extends DAO<GameBo> {
 
 	@Override
 	public boolean create(GameBo game) {
-		boolean succes = true;
-		
-		try {
-
-			String requete = ("INSERT INTO "+TABLE+" (symboleCarte) VALUES (?, ?, ?)");
+		boolean succes = true;	
+		try 
+		{
+			String requete = ("INSERT INTO "+TABLE+" (id_Game, gameName, gameDate) VALUES (?, ?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
+			
 			pst.setInt(1, game.getId_Game()); 
 			pst.setString(2, game.getGameName());
 			pst.setDate(3, game.getGameDate());//
-			// on exécute la mise à jour
-			pst.executeUpdate();
+			
+			pst.executeUpdate();					// on exécute la mise à jour
 
-			//Récupérer la clé qui a été générée et la pousser dans l'objet initial
-			ResultSet rs = pst.getGeneratedKeys();
-			if (rs.next()) {
-				game.setId_Game(rs.getInt(1));//auto-incrementation ???????
+			ResultSet rs = pst.getGeneratedKeys();	//Récupérer la clé qui a été générée et la pousser dans l'objet initial
+			if (rs.next()) 
+			{
+				game.setId_Game(rs.getInt(1));		
 			}
 
 		} 
@@ -52,7 +52,7 @@ public class GameDAO extends DAO<GameBo> {
 	public GameBo read(int id) {
 		GameBo game = null;
 		try {
-			ResultSet res = Connection.executeQuery("SELECT * FROM Carte where id_carte ="+ id) ;
+			ResultSet res = Connection.executeQuery("SELECT * FROM Game where id_Game ="+ id) ;
 			if(res.next()) {
 				game = new GameBo(res.getString(1));
 				game.setId_Game(res.getInt(2));
@@ -73,7 +73,7 @@ public class GameDAO extends DAO<GameBo> {
 		boolean succes = true;
 		try 
 		{
-			String requeteUpdate = ("update "+ TABLE +" set symbole = ?  where "+CLE_PRIMAIRE+" =?");
+			String requeteUpdate = ("update "+ TABLE +" set gameName = ?, set gameDate = ?  where "+CLE_PRIMAIRE+" = ?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
 			pst.setInt(1, game.getId_Game());		// transformation de l'enum str en enum int (enum.ordinal?)
 			pst.setString(2, game.getGameName());
@@ -91,7 +91,7 @@ public class GameDAO extends DAO<GameBo> {
 	public boolean delete(GameBo game) {
 		boolean succes = true;
 		try {
-			String requeteDelete = (" delete from "+ TABLE +" where "+CLE_PRIMAIRE+" =?");
+			String requeteDelete = (" delete from "+ TABLE +" where "+CLE_PRIMAIRE+" = ?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteDelete, Statement.RETURN_GENERATED_KEYS);		
 			pst.setInt(1, game.getId_Game());			
 			pst.executeUpdate();

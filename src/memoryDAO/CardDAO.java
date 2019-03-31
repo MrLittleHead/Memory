@@ -23,19 +23,19 @@ public class CardDAO extends DAO <CardBo>
 	public boolean create(CardBo card) {
 		boolean succes = true;
 		
-		try {
-
+		try 
+		{
 			String requete = ("INSERT INTO "+TABLE+" (symboleCarte) VALUES (?, ?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			pst.setInt(1, card.getId_Card()); 
-			pst.setInt(2, card.getSymbole().ordinal()); //
-			// on exécute la mise à jour
-			pst.executeUpdate();
+			pst.setInt(2, card.getSymbole().ordinal()); 
+			pst.executeUpdate();						// on exécute la mise à jour
 
-			//Récupérer la clé qui a été générée et la pousser dans l'objet initial
-			ResultSet rs = pst.getGeneratedKeys();
-			if (rs.next()) {
-				card.setId_Card(rs.getInt(1));//auto-incrementation ???????
+			
+			ResultSet rs = pst.getGeneratedKeys();		//Récupérer la clé qui a été générée et la pousser dans l'objet initial
+			if (rs.next()) 
+			{
+				card.setId_Card(rs.getInt(1));
 			}
 
 		} 
@@ -73,8 +73,8 @@ public class CardDAO extends DAO <CardBo>
 		{
 			String requeteUpdate = ("update "+ TABLE +" set symbole = ?  where "+CLE_PRIMAIRE+" =?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, card.getSymbole().ordinal());		// transformation de l'enum str en enum int (enum.ordinal?)
-			pst.setInt(2, card.getId_Card());
+			pst.setInt(1, card.getId_Card());
+			pst.setInt(2, card.getSymbole().ordinal());		// transformation de l'enum str en enum int (enum.ordinal?)
 			pst.executeUpdate();
 		} 
 		catch (SQLException e) {

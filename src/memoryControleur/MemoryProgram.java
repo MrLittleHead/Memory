@@ -6,45 +6,74 @@ import java.util.Scanner;
 
 import memoryBo.DistributionBo;
 import memoryBo.GameBo;
+import memoryBo.ParticipationBo;
 import memoryBo.PlayerBo;
-import memoryBo.ScorePlayerBo;
 
 public class MemoryProgram {
 
 	private PlayerBo currentPlayer = null;
 	private GameBo currentGame = null;
-	private ScorePlayerBo currentScore;
 	private Scanner scanGame = new Scanner(System.in);
-	
+
 	private int nbFindCard = 0;
 	private int nbPlayer;
 	private int nbCard;
-	
-	private List<PlayerBo> listPlayerBo = new ArrayList<PlayerBo>(nbPlayer);
-	private List<ScorePlayerBo> listScore = new ArrayList<ScorePlayerBo>(nbPlayer);
+
+	private List<PlayerBo> listPlayer = new ArrayList<PlayerBo>(nbPlayer);
+	private List<ParticipationBo> listParticipation = new ArrayList<ParticipationBo>(nbPlayer);
 	private static List<GameBo> listGame = new ArrayList<GameBo>();
-	
 
-	//je suis pas mal embrouiller avec les scanners j'ai du transformer mes string en scanner dans mes constructeur :/
-	//le code casse lors de la creation des joueurs : 
-	//mes intentions =  - creer une liste de joueurs 
-					//	- creer une liste de score associï¿½ (un tableau serai sans doute mieux) :s
-					//	- on passe au joueur et score suivant de la liste en cas d'echec findCard
-					// il manque les conditions de victoire et je dois refaire le CRUD + BD (Anglais oblige)
-	//a terme je veux supprimer les scan et faire une IHM
+	private void menu() {
+		int choice;
 
-	private void gameCreation() {
+		System.out.println("---------------Welcome to MemoryGame---------------");
+		System.out.println("NEWGAME : press 1");
+		System.out.println("LOAD    : press 2");
+		System.out.println("LEAVE   : press 3");
+
+		System.out.print("Saisissez votre choix : ");
+		choice = scanGame.nextInt();
+
+		while (!(choice == (int)choice)) // le choix ne peut pas etre autre chose qu'un int
+		{
+			System.out.print(" Caractère invalide. Ressaissez votre choix : ");
+			scanGame.next();
+		}
 		
-		System.out.println("entrez un nom de partie :");
-		String nameGame = scanGame.next();
-		GameBo game = new GameBo(nameGame);
+		while  (choice > 3 || choice < 1) // le choix doit etre compris entre 1 et 3
+		{
+			System.out.print(" Choix invalide. Ressaissez votre choix : ");
+			scanGame.next();
+		}
+		
+		System.out.println(choice);
+
+		if (choice == 1) {				//on demarre une nouvelle partie
+			gameCreation();
+			playerCreation();
+			listeCardCreation();	
+		}
+		if (choice == 2) {				//on charge une partie
+			System.out.println("choix 2");
+		}
+
+		if (choice == 3) {				//on quitte l'application
+			System.out.println("choix 3");
+		}
+
+	}
+
+	private void gameCreation() 
+	{
+		GameBo game = new GameBo("Test");
 
 		listGame.add(game);
 		currentGame = game;
+
 	}
 
-	private void playerCreation() {
-
+	private void playerCreation() 
+	{
 		System.out.print("Saisissez votre nombre de Joueurs : ");
 
 		while (!scanGame.hasNextInt())
@@ -58,12 +87,12 @@ public class MemoryProgram {
 			System.out.print("Saisissez le nom du player " + i + " :");
 			String name = scanGame.next();
 			PlayerBo player = new PlayerBo(name);
-			listPlayerBo.add(player);
-			ScorePlayerBo score = new ScorePlayerBo(player, currentGame.getId_Game(), 0);
-			listScore.add(score);
+			listPlayer.add(player);
+			ParticipationBo part = new ParticipationBo(player.getId_Player(), currentGame.getId_Game(), 0, false, i);
+			listParticipation.add(part);
 		}
-		currentPlayer = listPlayerBo.get(0);
-		currentScore  = listScore.get(0);
+		currentPlayer = listPlayer.get(0);
+		listParticipation.get(0).setHand(true);
 	}
 
 	private void listeCardCreation() {
@@ -87,11 +116,11 @@ public class MemoryProgram {
 			nbCard = scanGame.nextInt();
 		}
 	}
-	
+
 	private int ChooseCard(PlayerBo player, DistributionBo listCard) 
 	{
 		int choosenCard;
-		
+
 		System.out.print(player.getPseudo() + " Choisissez une carte : ");
 		while (!scanGame.hasNextInt()) 
 		{
@@ -133,28 +162,31 @@ public class MemoryProgram {
 		{
 			listCard.get(choosenCard).setVisible(false);
 			listCard.get(choosenCard2).setVisible(false);
-			
-			if ((currentPlayer.getId_Player() + 1) < nbPlayer)
-				currentPlayer = listPlayerBo.get(currentPlayer.getId_Player() + 1);
-			else
-				currentPlayer = listPlayerBo.get(0);
-			currentScore = listScore.get(currentPlayer.getId_Player()); //idem pour le score
+			listParticipation.get(currentPlayer.getId_Player()).setHand(false);
+
+
+			if ((currentPlayer.getId_Player() + 1) < nbPlayer) 
+			{
+				currentPlayer = listPlayer.get(currentPlayer.getId_Player() + 1);
+				listParticipation.get(currentPlayer.getId_Player()).setHand(true);
+			}
+			else 
+			{
+				currentPlayer = listPlayer.get(0);
+			listParticipation.get(currentPlayer.getId_Player()).setHand(true);
+			}
 		}
 		else
 		{
-			currentScore.findPairCard();
-			System.out.println("Total Score " + currentPlayer + " : " + currentScore.getScore());
+			listParticipation.get(currentPlayer.getId_Player()).findPairCard();
+			System.out.println("Total Score " + currentPlayer + " : " + listParticipation.get(currentPlayer.getId_Player()).getScorePlayer());
 			nbFindCard += 2;
 		}
 	}
 
 	public MemoryProgram()
 	{
-		System.out.println("---------------Memory---------------");
-
-		gameCreation();
-		playerCreation();
-		listeCardCreation();
+		menu();
 
 		System.out.println("            C'est parti");
 		DistributionBo p = new DistributionBo(nbCard);

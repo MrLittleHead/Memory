@@ -19,22 +19,22 @@ public class ParticipationBo {
 	}
 	
 
-	public GameBo getGame() {
+	public int getGame() {
 		return game;
 	}
 
 
-	public void setGame(GameBo game) {
+	public void setGame(int game) {
 		this.game = game;
 	}
 
 
-	public PlayerBo getPlayer() {
+	public int getPlayer() {
 		return player;
 	}
 
 
-	public void setPlayer(PlayerBo player) {
+	public void setPlayer(int player) {
 		this.player = player;
 	}
 

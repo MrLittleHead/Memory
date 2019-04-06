@@ -22,13 +22,10 @@ public class PlayerDAO extends DAO <PlayerBo>
 	@Override
 	public boolean create(PlayerBo player) {
 		boolean succes = true;
-		
 		try {
 
-			String requete = ("INSERT INTO "+TABLE+" (id_Player, pseudo) VALUES (?, ?)");
+			String requete = ("INSERT INTO "+TABLE+" (pseudo) VALUES (?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			
-			pst.setInt(2, player.getId_Player()); //
 			pst.setString(2, player.getPseudo());
 			pst.executeUpdate();
 
@@ -56,8 +53,9 @@ public class PlayerDAO extends DAO <PlayerBo>
 			ResultSet res = Connection.executeQuery("SELECT * FROM player where "+ CLE_PRIMAIRE +"= "+ id) ;
 			if(res.next())
 			{
-				player = new PlayerBo(res.getString(1));
-				player.setId_Player(res.getInt(1)); 
+				player = new PlayerBo();
+				player.setId_Player(res.getInt(1));
+				player.setPseudo(res.getString(2));
 			}
 		} 
 		catch (SQLException e) {
@@ -75,9 +73,8 @@ public class PlayerDAO extends DAO <PlayerBo>
 		{
 			String requeteUpdate = ("update "+ TABLE +" set pseudo = ?  where "+CLE_PRIMAIRE+" =?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);
-			
-			pst.setInt(1, player.getId_Player());		
-			pst.setString(2, player.getPseudo());
+			pst.setInt(2, player.getId_Player());		
+			pst.setString(1, player.getPseudo());
 			pst.executeUpdate();
 			
 		} 

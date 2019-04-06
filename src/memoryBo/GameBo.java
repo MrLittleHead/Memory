@@ -3,17 +3,19 @@ package memoryBo;
 public class GameBo {
 	
 	private java.util.Date date  = new java.util.Date();
-	private static int counter = 0;
 	private int id_Game;
 	private String gameName;
 	private java.sql.Date gameDate;
 	
+	
+	public GameBo() {
+		super();
+	}
+	
 	public GameBo(String gameName) {
 		super();
-		this.id_Game = counter;
 		this.gameName = gameName;
 		this.gameDate =  new java.sql.Date(date.getTime());
-		++counter;
 	}
 	
 	public String getGameName() {

@@ -23,12 +23,10 @@ public class GameDAO extends DAO<GameBo> {
 		boolean succes = true;	
 		try 
 		{
-			String requete = ("INSERT INTO "+TABLE+" (id_Game, gameName, gameDate) VALUES (?, ?, ?)");
+			String requete = ("INSERT INTO "+TABLE+" (gameName, gameDate) VALUES (?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			
-			pst.setInt(1, game.getId_Game()); 
-			pst.setString(2, game.getGameName());
-			pst.setDate(3, game.getGameDate());//
+			pst.setString(1, game.getGameName());
+			pst.setDate(2, game.getGameDate());//
 			
 			pst.executeUpdate();					// on exécute la mise à jour
 
@@ -52,12 +50,12 @@ public class GameDAO extends DAO<GameBo> {
 	public GameBo read(int id) {
 		GameBo game = null;
 		try {
-			ResultSet res = Connection.executeQuery("SELECT * FROM Game where id_Game ="+ id) ;
+			ResultSet res = Connection.executeQuery("SELECT * FROM Game where "+CLE_PRIMAIRE+" ="+ id) ;
 			if(res.next()) {
-				game = new GameBo(res.getString(1));
-				game.setId_Game(res.getInt(2));
-				game.setGameName(res.getString(3));
-				game.setGameDate(res.getDate(4));
+				game = new GameBo();
+				game.setId_Game(res.getInt(1));
+				game.setGameName(res.getString(2));
+				game.setGameDate(res.getDate(3));
 			}
 		} 
 		catch (SQLException e) {
@@ -75,9 +73,9 @@ public class GameDAO extends DAO<GameBo> {
 		{
 			String requeteUpdate = ("update "+ TABLE +" set gameName = ?, set gameDate = ?  where "+CLE_PRIMAIRE+" = ?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, game.getId_Game());		// transformation de l'enum str en enum int (enum.ordinal?)
-			pst.setString(2, game.getGameName());
-			pst.setDate(3, game.getGameDate());
+			pst.setInt(3, game.getId_Game());		
+			pst.setString(1, game.getGameName());
+			pst.setDate(2, game.getGameDate());
 			pst.executeUpdate();
 		} 
 		catch (SQLException e) {

@@ -187,7 +187,7 @@ public class MemoryProgram {
 	public MemoryProgram()
 	{
 		menu();
-
+		
 		System.out.println("            C'est parti");
 		DistributionBo p = new DistributionBo(nbCard);
 		System.out.println(p.toString());

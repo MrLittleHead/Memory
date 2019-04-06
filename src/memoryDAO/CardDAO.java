@@ -5,13 +5,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.omg.PortableServer.SERVANT_RETENTION_POLICY_ID;
+
+import com.sun.java_cup.internal.runtime.Symbol;
+
 import memoryBo.CardBo;
+import memoryBo.SymboleBo;
 
 public class CardDAO extends DAO <CardBo> 
 {
 	
-	private static final String TABLE = "Carte";
-	private static final String CLE_PRIMAIRE = "id_carte";
+	private static final String TABLE = "Card";
+	private static final String CLE_PRIMAIRE = "id_Card";
 
 	private static CardDAO instance = null; //création d'un singleton
 
@@ -19,16 +24,14 @@ public class CardDAO extends DAO <CardBo>
 		if(instance == null);         
 		return instance = new CardDAO();     }
 
-	@Override
 	public boolean create(CardBo card) {
 		boolean succes = true;
 		
 		try 
 		{
-			String requete = ("INSERT INTO "+TABLE+" (symboleCarte) VALUES (?, ?, ?)");
+			String requete = ("INSERT INTO "+TABLE+" (symbole) VALUES (?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			pst.setInt(1, card.getId_Card()); 
-			pst.setInt(2, card.getSymbole().ordinal()); 
+			pst.setInt(1, card.getSymbole().ordinal()); 
 			pst.executeUpdate();						// on exécute la mise à jour
 
 			
@@ -52,10 +55,12 @@ public class CardDAO extends DAO <CardBo>
 	public CardBo read(int id) {
 		CardBo card = null;
 		try {
-			ResultSet res = Connection.executeQuery("SELECT * FROM "+TABLE+" where id_carte ="+ id) ;
+			ResultSet res = Connection.executeQuery("SELECT * FROM "+TABLE+" where " +CLE_PRIMAIRE+"="+ id) ;
 			if(res.next()) {
-				card = new CardBo(res.getInt(1));
-				card.setId_Card(res.getInt(1)); // creation du set avec implementation auto ?
+				card = new CardBo();
+				card.setId_Card(res.getInt(1));
+				card.setSymbole(SymboleBo.get(res.getInt(2)));
+				//card.set(res.getInt(1)); 
 			}
 		} 
 		catch (SQLException e) {
@@ -63,25 +68,28 @@ public class CardDAO extends DAO <CardBo>
 			e.printStackTrace();
 		}
 		return card;
-		
 	}
 
 	@Override
 	public boolean update(CardBo card) {
-		boolean succes = true;
+		if (card == null)
+			return false;
 		try 
 		{
-			String requeteUpdate = ("update "+ TABLE +" set symbole = ?  where "+CLE_PRIMAIRE+" =?");
+			String requeteUpdate = ("update "+ TABLE +" set symbole = ?  where "+CLE_PRIMAIRE+" = ?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, card.getId_Card());
-			pst.setInt(2, card.getSymbole().ordinal());		// transformation de l'enum str en enum int (enum.ordinal?)
+			pst.setInt(1, card.getSymbole().ordinal());		// transformation de l'enum str en enum int (enum.ordinal?)
+			pst.setInt(2, card.getId_Card());
 			pst.executeUpdate();
+			
+			
 		} 
 		catch (SQLException e) {
-			succes =false;
 			e.printStackTrace();
+			return false;
 		}
-		return succes;
+		return true;
+		
 	}
 
 	@Override
@@ -99,5 +107,6 @@ public class CardDAO extends DAO <CardBo>
 		}
 		return succes;
 	}
+	
 
 }

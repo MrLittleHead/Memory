@@ -5,18 +5,21 @@ public class CardBo {
 	
 	
 	private final SymboleBo SYMBOLE_CACHE = SymboleBo.get(0);
-	private static int counter = 0;
-	private int id_Card;
+
+	private static int id_Card = 1;
 	private boolean visible = false;
 	private SymboleBo symbole;
 
-
+	
+	public CardBo() { 
+	super();
+	}
+		
 	public CardBo(int motif) 
 	{
 		super();
 		this.symbole = SymboleBo.get(motif);
-		this.id_Card = counter;
-		++counter;
+		
 	}
 
 	public boolean isVisible() 
@@ -48,9 +51,9 @@ public class CardBo {
 		return id_Card;
 	}
 	
-	public void setId_Card(int int1)
+	public void setId_Card(int id)
 	{
-	this.id_Card = counter; 		
+	this.id_Card = id; 		
 	}
 
 	@Override

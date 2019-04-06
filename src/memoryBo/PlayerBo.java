@@ -3,19 +3,19 @@ package memoryBo;
 public class PlayerBo 
 {
 	
-	private static int counter = 0;
+
 	private int id_Player;
 	private String pseudo;
 	
 	
+	public PlayerBo() {
+		super();
+	}
 	
 	public PlayerBo(String playerPseudo) 
 	{
 		super();
-		this.pseudo = playerPseudo;
-		this.id_Player = counter;
-		++counter;
-		
+		this.pseudo = playerPseudo;		
 	}
 	
 	public int getId_Player() 

@@ -14,9 +14,9 @@ public class Connection {
 
 	private static java.sql.Connection connect = null;
 
-	private static final String ID = "Maxou";
+	private static final String ID = "maxou";
 	private static final String MDP = "sio";
-	private static final String NOM_SERVEUR = "localhost\\SQLEXPRESS";
+	private static final String NOM_SERVEUR = "BTSWIN7-99\\SQLEXPRESS";
 	private static final String NOM_BD = "Memory";
 
 
@@ -91,69 +91,6 @@ public class Connection {
 		getInstance();
 		Connection.close();
 		System.out.println("deconnexion ok");
-	}
-
-	/**
-	 * Cette méthode correspond à la méthode create de la classe AvionDAO
-	 * On peut la tester dans le main avec
-	 * Avion avion=AvionDAO.getInstance().read(5);		
-	 * AvionDAO.getInstance().create(avion);
-	 * System.out.println(avion);
-	 * --> Notez que AvionDAO est défini comme un singleton, unique instance pour tout le programme 
-	 * @param av
-	 */
-	//	PUBLIC STATIC EXEMPLECREATEPREPAREDSTATEMENT(AVION AV) {
-	//		BOOLEAN SUCCES=TRUE;
-	//		// CONSTANTES QUI PEUVENT ÊTRE DÉCLARÉES DANS VOS CLASSES DAO
-	//		STRING TABLE = "AVION";
-	//		STRING CLE_PRIMAIRE = "NUMAV";
-	//		TRY {
-	//			
-	//			STRING REQUETEDELETE = "DELETE FROM "+TABLE+" WHERE "+CLE_PRIMAIRE+" = ?";
-	//			STRING REQUETEUPDATE = "UPDATE "+TABLE+" SET NOMAV = ?, LOC = ?, CAPACITE = ? WHERE "+CLE_PRIMAIRE+" = ?";
-	//			STRING REQUETE = "INSERT INTO "+TABLE+" (NOMAV, LOC, CAPACITE) VALUES (?, ?, ?)";
-	//			PREPAREDSTATEMENT PST = CONNEXION.GETINSTANCE().PREPARESTATEMENT(REQUETE, STATEMENT.RETURN_GENERATED_KEYS);
-	//			// ON POSE UN STRING EN PARAMÈTRE 1 -1ER '?'- ET CE STRING EST LE NOM DE L'AVION
-	//			PST.SETSTRING(1, AV.GETNOM());
-	//			PST.SETSTRING(2, AV.GETLOC());
-	//			PST.SETINT(3, AV.GETCAPACITE());
-	//			// ON EXÉCUTE LA MISE À JOUR
-	//			PST.EXECUTEUPDATE();
-	//
-	//			//RÉCUPÉRER LA CLÉ QUI A ÉTÉ GÉNÉRÉE ET LA POUSSER DANS L'OBJET INITIAL
-	//			RESULTSET RS = PST.GETGENERATEDKEYS();
-	//			IF (RS.NEXT()) {
-	//				AV.SETNUMERO(RS.GETINT(1));
-	//			}
-	//
-	//		} CATCH (SQLEXCEPTION E) {
-	//			SUCCES=FALSE;
-	//			E.PRINTSTACKTRACE();
-	//		}
-	//
-	//		RETURN SUCCES;
-	//	}
-
-
-	/**
-	 * Requête qui permet de voir le contenu d'une table
-	 * Attention à ne pas perdre la première ligne en testant la table vide
-	 * @param table
-	 */
-	public static void afficheSelectEtoile(String table, String clauseWhere) throws SQLException{
-	}
-
-
-
-	/**
-	 * TODO Requête qui permet de récupérer le plus grand id de la table : utiliser MAX
-	 * @param cle
-	 * @param table
-	 * @return
-	 */
-	public static int getMaxId(String cle, String table) throws SQLException {
-		int id= -1;
-		return id;
 	}
 
 

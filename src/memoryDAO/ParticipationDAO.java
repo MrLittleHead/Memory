@@ -35,8 +35,8 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 		{
 			String requete = ("INSERT INTO "+TABLE+" (id_Game, id_Player, scorePlayer, hand, positionTour) VALUES (?, ?, ?, ?, ?)");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-			pst.setInt(1, part.getGame().getId_Game()); 
-			pst.setInt(2, part.getPlayer().getId_Player());
+			pst.setInt(1, part.getGame()); 
+			pst.setInt(2, part.getPlayer());
 			pst.setInt(3, part.getScorePlayer());
 			pst.setBoolean(4, part.isHand());
 			pst.setInt(5, part.getPositionTour());
@@ -64,8 +64,8 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 			int nbPlayers = 0;
 			if (rs.next() != false)
 			{
-				 nbPlayers= rs.getInt("nb");
-				 listParticipation = new ArrayList<ParticipationBo>(nbPlayers);				
+				nbPlayers= rs.getInt("nb");
+				listParticipation = new ArrayList<ParticipationBo>(nbPlayers);				
 			}
 			else
 			{
@@ -74,14 +74,12 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 			requete = "SELECT id_Player, scorePlayer, hand, playerPosition WHERE id_Game = " + id_game;
 			pst = Connection.getInstance().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			rs = pst.executeQuery();
-			if (rs.next() != false)
-			{
-				do
-				{					
-					part = new ParticipationBo(id_game, rs.getInt("id_Player"), rs.getInt("scorePlayer"), rs.getBoolean("hand"), rs.getInt("playerPosition"));
-					listParticipation.add(part);
-				} while (rs.next() != false);				
-			}
+			do
+			{					
+				part = new ParticipationBo(id_game, rs.getInt("id_Player"), rs.getInt("scorePlayer"), rs.getBoolean("hand"), rs.getInt("playerPosition"));
+				listParticipation.add(part);
+			} while (rs.next() != false);				
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -97,8 +95,8 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 		{
 			String requeteUpdate = ("update "+ TABLE +" set scorePlayer = ?,  hand = ?, positionTour = ?  where id_Game = ? and id_Player = ?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteUpdate, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, part.getId_Game());		// transformation de l'enum str en enum int (enum.ordinal?)
-			pst.setInt(2, part.getId_Player());
+			pst.setInt(1, part.getGame());		// transformation de l'enum str en enum int (enum.ordinal?)
+			pst.setInt(2, part.getPlayer());
 			pst.setInt(3, part.getScorePlayer());
 			pst.setBoolean(4, part.isHand());
 			pst.setInt(5, part.getPositionTour());
@@ -119,8 +117,8 @@ public class ParticipationDAO extends DAO<ParticipationBo> {
 		{
 			String requeteDelete = (" delete from "+ TABLE +" where id_Game = ? and id_Player = ?");
 			PreparedStatement pst = Connection.getInstance().prepareStatement(requeteDelete, Statement.RETURN_GENERATED_KEYS);		
-			pst.setInt(1, part.getId_Game());
-			pst.setInt(2, part.getId_Player());
+			pst.setInt(1, part.getGame());
+			pst.setInt(2, part.getPlayer());
 			pst.executeUpdate();
 		} 
 		catch (SQLException e) 
